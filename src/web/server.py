@@ -357,14 +357,17 @@ async def process_conversation(request: ConversationRequest):
 # =============================================================================
 
 if __name__ == "__main__":
+    # Get port from environment variable (for deployment platforms like Render)
+    port = int(os.environ.get("PORT", 3000))
+    
     print("🚀 Starting Every Intelligence Web Server")
-    print("📍 Frontend: http://localhost:3000")
-    print("📋 API Docs: http://localhost:3000/docs")
-    print("🔍 Health Check: http://localhost:3000/health")
+    print(f"📍 Frontend: http://localhost:{port}")
+    print(f"📋 API Docs: http://localhost:{port}/docs")
+    print(f"🔍 Health Check: http://localhost:{port}/health")
     
     uvicorn.run(
         app,
         host="0.0.0.0",
-        port=3000,
+        port=port,
         log_level="info"
     ) 

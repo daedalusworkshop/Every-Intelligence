@@ -44,7 +44,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
-every_env/  # Your specific virtual environment
+every_env/ 
 
 # Spyder project settings
 .spyderproject
