@@ -264,8 +264,20 @@ async def process_conversation(request: ConversationRequest):
                         )
                     ))
                 except (KeyError, TypeError) as e:
-                    print(f"⚠️  Skipping malformed insight: {e}")
-                    continue
+                    # This can happen if the LLM output is JSON but doesn't match the InsightCard structure
+                    processing_time = time.perf_counter() - start_time
+                    if session_id in progress_updates:
+                        del progress_updates[session_id]
+                    
+                    # Use keyword arguments for clarity and to avoid errors
+                    return ProcessingResponse(
+                        status="error",
+                        processing_time=processing_time,
+                        insights=[],
+                        error=f"Error creating insight cards from processed data: {e}",
+                        raw_insights=raw_insights,
+                        session_id=session_id
+                    )
             
             # Mark progress as complete
             progress_updates[session_id].append("COMPLETE")
@@ -280,7 +292,8 @@ async def process_conversation(request: ConversationRequest):
             return response
             
         except json.JSONDecodeError as e:
-            print(f"⚠️  JSON parsing failed: {e}")
+            # This occurs if the LLM output is not valid JSON
+            processing_time = time.perf_counter() - start_time
             
             # Check if the raw insights look like an error message
             if raw_insights.startswith("Error:") or "error" in raw_insights.lower()[:100]:
