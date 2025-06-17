@@ -347,7 +347,7 @@ async def process_conversation(request: ConversationRequest):
         return ProcessingResponse(
             status="error",
             processing_time=processing_time,
-            insights="",
+            insights=[],
             error=str(e),
             session_id=session_id
         )
