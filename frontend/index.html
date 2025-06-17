@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Every Intelligence</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .border-homeborder { border-color: #505050; }
+        
+        /* Loader styles */
+        #loader {
+            display: none; /* Hidden by default */
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            background-color: #000000;
+        }
+        #loader-text {
+            color: #EAEAEA;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 500;
+            line-height: 1.3;
+            text-align: center;
+            max-width: 600px;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+        
+        .progress-container {
+            margin-top: 2rem;
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 3px;
+            background-color: #333;
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #c0f0fb 0%, #dbf8ff 100%);
+            border-radius: 2px;
+            transition: width 3.5s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 0%;
+        }
+        
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: #888;
+            margin-top: 0.5rem;
+        }
+        
+        .progress-step {
+            text-align: center;
+            flex: 1;
+            opacity: 0.5;
+            transition: opacity 0.5s ease;
+        }
+        
+        .progress-step.active {
+            opacity: 1;
+            color: #EAEAEA;
+        }
+    </style>
+</head>
+<body class="bg-black text-white">
+    <!-- Header -->
+    <header class="w-full bg-black border-b border-[#505050]">
+        <nav class="relative flex justify-between items-center px-4 py-6 w-full">
+            <!-- Left Side: Menu + Search -->
+            <div class="flex items-center gap-6">
+                <button id="open-drawer" class="p-2">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3 12H21M3 6H21M3 18H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <a href="/search" class="p-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M7.657 6.247c.11-.33.576-.33.686 0l.645 1.937a2.89 2.89 0 0 0 1.829 1.828l1.936.645c.33.11.33.576 0 .686l-1.937.645a2.89 2.89 0 0 0-1.828 1.829l-.645 1.936a.361.361 0 0 1-.686 0l-.645-1.937a2.89 2.89 0 0 0-1.828-1.828l-1.937-.645a.361.361 0 0 1 0-.686l1.937-.645a2.89 2.89 0 0 0 1.828-1.828l.645-1.937zM3.794 1.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387A1.734 1.734 0 0 0 4.593 5.9l-.387 1.162a.217.217 0 0 1-.412 0L3.407 5.9A1.734 1.734 0 0 0 2.31 4.807l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387A1.734 1.734 0 0 0 3.407 2.31l.387-1.162zM10.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L10.863.1z"/>
+                    </svg>
+                </a>
+            </div>
+
+            <!-- Center: Logo (Dead Center of Screen) -->
+            <div class="absolute left-1/2 transform -translate-x-1/2">
+                <a href="/">
+                    <img src="assets/logo.png" alt="Every Intelligence" class="h-12 w-auto">
+                </a>
+            </div>
+            
+            <!-- Spacer for flex layout -->
+            <div class="flex-1"></div>
+
+            <!-- Right Side: Sign in + Subscribe -->
+            <div class="flex items-center gap-4">
+                <a href="/login" class="text-[#BDBDBD]">Sign in</a>
+                <a href="/subscribe" class="px-4 py-2 bg-[#c0f0fb] text-black font-bold rounded-md">Subscribe</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Mobile Drawer -->
+    <div id="drawer" class="fixed transition-all z-[100001] top-0 left-[-100%] bottom-0 flex flex-col p-4 bg-zinc-900 max-w-[277px]">
+        <button id="close-drawer" class="self-start mb-4">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+        <div class="space-y-4 text-white">
+            <a href="/" class="block">Home</a>
+            <a href="/about" class="block">About</a>
+            <a href="/contact" class="block">Contact</a>
+        </div>
+    </div>
+
+    <!-- Drawer Overlay -->
+    <div id="drawer-overlay" class="fixed inset-0 bg-black/50 z-[100000] hidden"></div>
+
+    <!-- Main Content -->
+    <main class="w-full" style="height: calc(100vh - 96px);">
+        <!-- Search Interface -->
+        <div id="main-content" class="w-full flex items-center justify-center h-full">
+            <!-- This relative container is the new centered item -->
+            <div class="relative w-full max-w-2xl px-4">
+                
+                <!-- Text is positioned above this container -->
+                <div class="absolute bottom-full w-full left-0 mb-10 text-center">
+                    <h1 class="text-5xl font-serif text-white font-light">Every Intelligence</h1>
+                </div>
+                
+                <!-- Search box -->
+                <form>
+                    <div class="w-full">
+                        <div class="flex items-center gap-4 p-4 rounded-3xl bg-[#2f2f2f] border border-[#4a4a4a] shadow-lg">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/e/ef/ChatGPT-Logo.svg" alt="ChatGPT" width="24" height="24" class="flex-shrink-0 brightness-0 invert opacity-70">
+                            <input 
+                                placeholder="Paste your ChatGPT conversation link..." 
+                                autofocus 
+                                class="flex-1 bg-transparent outline-none text-base placeholder:text-[#9ca3af] text-white" 
+                                type="text" 
+                                id="query" 
+                            />
+                            <button type="submit" class="flex-shrink-0 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors duration-200 group">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-white group-hover:text-white/90">
+                                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <p class="mt-4 text-center text-xl text-[#888888] font-light"> How we think about what you're thinking about.</p>
+            </div>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loader" class="flex h-full">
+            <div class="flex flex-col items-center">
+                <div id="loader-text"></div>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div id="progress-fill" class="progress-fill"></div>
+                    </div>
+                    <div class="progress-steps">
+                        <div class="progress-step" id="step-extract">Extract</div>
+                        <div class="progress-step" id="step-search">Search</div>
+                        <div class="progress-step" id="step-connect">Connect</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <!-- <footer class="w-full bg-black border-t border-homeborder">
+        <div class="flex items-start justify-between px-4 py-20 w-full max-w-6xl mx-auto text-white">
+            <div class="text-left">
+                <div class="mb-5">
+                    <img src="assets/logo.png" alt="Every" class="h-8 w-auto">
+                </div>
+                <h2 class="text-4xl font-serif">What Comes Next</h2>
+                <p class="text-base font-serif text-white mt-2">
+                    New ideas to help you build the future—in your inbox, every day.
+                </p>
+            </div>
+            <div class="flex gap-8 text-white">
+                <div class="flex flex-col gap-4">
+                    <a href="/about">About</a>
+                    <a href="/contact">Contact us</a>
+                    <a href="/advertise">Advertise with us</a>
+                    <a href="/team">The team</a>
+                    <a href="/faq">FAQ</a>
+                    <a href="/terms">Terms</a>
+                </div>
+                <div class="flex flex-col gap-4">
+                    <a href="https://x.com/every" target="_blank" class="flex gap-2">
+                        X
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                    <a href="https://linkedin.com/company/everyinc" target="_blank" class="flex gap-2">
+                        LinkedIn
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                    <a href="https://youtube.com/@everyinc" target="_blank" class="flex gap-2">
+                        YouTube
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer> -->
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile drawer
+        const openDrawer = document.getElementById("open-drawer");
+        const closeDrawer = document.getElementById("close-drawer");
+        const drawer = document.getElementById("drawer");
+        const drawerOverlay = document.getElementById("drawer-overlay");
+
+        openDrawer.addEventListener("click", () => {
+            drawer.style.left = "0%";
+            drawerOverlay.classList.remove("hidden");
+        });
+
+        const closeDrawerHandler = () => {
+            drawer.style.left = "-100%";
+            drawerOverlay.classList.add("hidden");
+        };
+
+        closeDrawer.addEventListener("click", closeDrawerHandler);
+        drawerOverlay.addEventListener("click", closeDrawerHandler);
+
+        // Search functionality - NOW ACTUALLY FUNCTIONAL!
+        document.querySelector('form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const query = document.getElementById('query').value.trim();
+            
+            if (!query) {
+                alert("Please paste a conversation link to begin.");
+                return;
+            }
+
+            // Basic URL validation
+            if (!query.includes('chatgpt.com')) {
+                alert("Please provide a valid ChatGPT conversation URL.");
+                return;
+            }
+
+            // --- Start Real Progress Tracking ---
+            const mainContent = document.getElementById('main-content');
+            const loader = document.getElementById('loader');
+            const loaderText = document.getElementById('loader-text');
+            
+            mainContent.style.display = 'none';
+            loader.style.display = 'flex';
+
+            const progressFill = document.getElementById('progress-fill');
+            const stepExtract = document.getElementById('step-extract');
+            const stepSearch = document.getElementById('step-search');
+            const stepConnect = document.getElementById('step-connect');
+
+            // Generate unique session ID for progress tracking
+            const sessionId = 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            
+            let currentStep = 0;
+            let progressValue = 0;
+
+            function updateProgressUI(message, step = null) {
+                // Update message
+                loaderText.innerHTML = message;
+                loaderText.style.opacity = 1;
+                
+                // Update step indicators
+                stepExtract.classList.remove('active');
+                stepSearch.classList.remove('active');
+                stepConnect.classList.remove('active');
+                
+                // Determine step from message content if not provided
+                if (step === null) {
+                    if (message.toLowerCase().includes('conversation') || message.toLowerCase().includes('chatgpt') || message.toLowerCase().includes('extract')) {
+                        step = 0; // Extract
+                        progressValue = Math.min(progressValue + 10, 30);
+                    } else if (message.toLowerCase().includes('vault') || message.toLowerCase().includes('search') || message.toLowerCase().includes('articles') || message.toLowerCase().includes('found')) {
+                        step = 1; // Search
+                        progressValue = Math.min(progressValue + 15, 60);
+                    } else if (message.toLowerCase().includes('ai') || message.toLowerCase().includes('weaving') || message.toLowerCase().includes('crafting') || message.toLowerCase().includes('connections')) {
+                        step = 2; // Connect
+                        progressValue = Math.min(progressValue + 20, 90);
+                    } else {
+                        progressValue = Math.min(progressValue + 5, 95);
+                    }
+                }
+                
+                // Update active step
+                if (step === 0) {
+                    stepExtract.classList.add('active');
+                } else if (step === 1) {
+                    stepSearch.classList.add('active');
+                } else if (step === 2) {
+                    stepConnect.classList.add('active');
+                }
+                
+                // Update progress bar
+                progressFill.style.width = progressValue + '%';
+            }
+
+            // Initialize progress tracking via Server-Sent Events
+            const eventSource = new EventSource(`/api/progress/${sessionId}`);
+            
+            eventSource.onmessage = function(event) {
+                const data = JSON.parse(event.data);
+                
+                if (data.type === 'progress') {
+                    updateProgressUI(data.message);
+                } else if (data.type === 'complete') {
+                    eventSource.close();
+                    progressFill.style.width = '100%';
+                    stepConnect.classList.add('active');
+                    updateProgressUI("Ready! Taking you to your insights...");
+                }
+            };
+            
+            eventSource.onerror = function(event) {
+                console.log('SSE Error:', event);
+                // Fallback to generic message if SSE fails
+                updateProgressUI("Processing your conversation...");
+            };
+
+            // Start with initial message
+            updateProgressUI("Starting your resonance journey...");
+
+            try {
+                // ACTUAL API CALL TO OUR BACKEND!
+                const response = await fetch('/api/process-conversation', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chatgpt_url: query,
+                        session_id: sessionId
+                    })
+                });
+
+                const result = await response.json();
+                
+                // Close EventSource if still open
+                if (eventSource.readyState !== EventSource.CLOSED) {
+                    eventSource.close();
+                }
+
+                if (result.status === 'success') {
+                    // Final completion state
+                    progressFill.style.width = '100%';
+                    stepConnect.classList.add('active');
+                    updateProgressUI("Ready! Taking you to your insights...");
+                    
+                    // Brief pause to show completion
+                    setTimeout(() => {
+                        // Store the results and redirect to results page
+                        sessionStorage.setItem('processingResults', JSON.stringify(result));
+                        window.location.href = '/results';
+                    }, 800);
+                } else {
+                    // Handle error
+                    loader.style.display = 'none';
+                    mainContent.style.display = 'flex';
+                    alert(`Error: ${result.error || 'Something went wrong processing your conversation.'}`);
+                }
+
+            } catch (error) {
+                // Handle network errors
+                if (eventSource.readyState !== EventSource.CLOSED) {
+                    eventSource.close();
+                }
+                loader.style.display = 'none';
+                mainContent.style.display = 'flex';
+                alert(`Network error: ${error.message}. Please check your connection and try again.`);
+            }
+        });
+    </script>
+</body>
+</html> 

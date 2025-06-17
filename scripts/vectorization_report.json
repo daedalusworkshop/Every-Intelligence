@@ -1,0 +1,34 @@
+{
+  "index_stats": {
+    "total_vector_count": 6456,
+    "namespace_count": 1,
+    "namespaces": {
+      "every-to": {
+        "vector_count": 6456
+      }
+    }
+  },
+  "test_query": "artificial intelligence and machine learning",
+  "test_results_count": 5,
+  "sample_results": [
+    {
+      "title": "Meditations on AI Mecca",
+      "author": "Evan Armstrong",
+      "score": 0.4000418782234192,
+      "chunk_preview": "seemed to formone that went far beyond natural language processing to incorporate images, autonomy, ..."
+    },
+    {
+      "title": "The New Science of Growth Marketing",
+      "author": "Josh Payne",
+      "score": 0.36201581358909607,
+      "chunk_preview": "Given the right input data, the simplest machine learning algorithms have proven quite capable of ou..."
+    },
+    {
+      "title": "Who Wins the AI Value Chain?",
+      "author": "Evan Armstrong",
+      "score": 0.34118467569351196,
+      "chunk_preview": "ause most of an AI product resides within digital goods, the boundaries between capabilities and fir..."
+    }
+  ],
+  "validation_time": "2025-06-15T23:50:23.059755"
+}

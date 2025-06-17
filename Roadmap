@@ -1,0 +1,108 @@
+# Every Content Intelligence Roadmap
+**Vision:** Bridge the gap between Every's brilliant knowledge and your current work by providing contextual insights from AI conversation analysis
+
+**Core Use Case:** "I'm working through a problem with ChatGPT/Claude. What has Every thought about this?" → Get relevant insights that inform your current thinking, not generic search results.
+
+## **Phase 1: Universal Data Foundation**
+
+The goal is to collect and structure all of Every's content for conversation-driven contextual retrieval.
+
+1. **Scrape the Content:**
+   * **Task:** Write a script to gather all article URLs from Every's archive, then loop through each URL to extract the title, author, publication date, and full text content.
+   * **Software:**
+     * **Language:** Python
+     * **Libraries:** `Beautiful Soup` (to parse HTML)
+
+2. **Structure and Store the Data:**
+   * **Task:** Save the scraped data into a single, well-structured JSON file. This becomes the master source for conversation-driven insights.
+   * **Software:**
+     * **Format:** JSON (a list of objects, one for each article)
+
+*Current outcome: @scraped_articles.json – has probably essays but large paywall limitation*
+
+## **Phase 2: Conversation-Driven Intelligence Pipeline** 
+
+### **Core Architecture: Conversation → Context → Insights**
+
+**User Experience:**
+1. User shares AI conversation (ChatGPT, Claude, Gemini) which is then scrapped and inputted.
+2. Tool extracts problem context, thinking process, and current mental model
+3. Returns: "What has Every thought about [extracted context]?"
+4. Provides contextual insights + breadcrumbs back to source articles
+
+### **Step 1: Conversation-Driven Contextual Intelligence**
+
+The goal is to bridge the user's exact conversation context with Every's institutional knowledge.
+
+1. **Enhanced Conversation Analysis:** *done!!!!!*
+   * **Task:** Discern what's relevant to the user, based off the ChatGPT.com conversation   
+   * **Software:**
+     * **Context Extraction:** GPT-4.1 for deep conversation understanding
+     * **Multi-Query Generation:** Convert conversation context into targeted search queries
+   * **Logic:**
+     - Parse conversation to identify: main topics, user's thinking patterns, key concepts, areas of interest/curiosity/difficulty
+     - Generate 5 contextual search queries that capture their intellectual focus and exploration areas
+     - Focus on what they're actually working on, not just keywords 
+
+2. **Contextual Insight Generation:**
+   * **Task:** Generate insights that directly reference their conversation and show Every's perspective
+   * **Software:**
+     * **Vector Search:** Pinecone + cosine similarity *completed this with @extrator.py & query system.py*
+     * **Insight Synthesis:** GPT-4.1 for conversation-aware insight generation
+   * **Format:** "In your conversation about X, Every's [Author] wrote: '[Quote]'. This suggests you might consider [specific insight]"
+   * **Logic:** (still contemplating)
+     - Reference specific parts of their conversation
+     - Include direct quotes from Every articles
+     - Show how Every's thinking applies to their exact situation
+     - Provide actionable connections, not generic summaries
+
+     or:
+     - "Given the user is working on X and thinking about Y, what specific insights 
+     from this Every article would help them right now?"
+     - Include breadcrumb links to full articles for deeper exploration
+     - Focus on distictive insights that complement their current thinking
+
+3. **Build Web Interface:**
+   * **Task:** Create simple, elegant UI for the conversation → insights workflow
+   * **Features:**
+     - Heading: "What has Every thought about...?'
+     - Placeholder: "What I'm thihnking about"
+     - Results: Contextual insights with source links
+     - Optional: Show extracted context for transparency
+### **Step 2: Simplified Implementation & User Experience**
+
+
+   * **Software:**
+   * **Logic:**
+
+
+
+### **Portfolio & Gift Strategy**
+* **Target:** Every team; demonstration of product thinking + technical execution
+* **Positioning:** "Paying users' killer app" - premium feature that adds substantial value
+* **Use Case:** Show how institutional knowledge can integrate into actual workflows
+* **Genereal idea** Every is a cutting-edge company with a very standard essay app. Why? 
+
+### **Advanced Features** (if successful)
+0. **Upload the AI & I transcripts**
+   * Include Audio Preview feature, along with the quotations
+
+0. **Present over past**
+   * AI timelines move fast, an article from 2025 > 2024 > 2023
+
+1. **Browser Extension:**
+   * Live conversation analysis as users work with AI assistants/doc editors
+   * Contextual Every insights in sidebar
+
+2. **Conversation Memory:**
+   * Track user's evolving challenges across conversations
+   * Improve relevance based on their ongoing projects
+
+3. **Cross-Platform Intelligence:**
+   * Learn from conversation patterns to improve insight relevance
+   * Identify gaps in Every's knowledge coverage
+
+4. **Create a URL specific URL which can be put into ChatGPT**
+    * Generally useful app.
+    * I would be able to insert a link like *viewer.com/link=Chatgpt.com/123450qwer* and ChatGPT could finally be able to see the convo
+    * Interoperable across models's webapps (Claude, Gemini, OpenAI)

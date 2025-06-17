@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Every Intelligence</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --separator-spacing: 4rem; /* This is your "joystick" to control vertical rhythm */
+            --hook-to-bridge-spacing: 0.7rem;
+            --bridge-to-card-spacing: 1.4rem;
+            --article-card-padding: 0.8rem;
+            --article-card-gap: 0.5rem;
+            --hook-font-size: 2.1rem;
+            --bridge-font-size: 1.25rem;
+        }
+
+        /* --- Base & Typography --- */
+        body {
+            background-color: #000000;
+            color: #FFFFFF;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+            /* The padding-top will be handled by the header's height now */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        main {
+             padding: 4rem 2rem;
+        }
+
+        /* --- Layout: The Feed --- */
+        .revelation-feed {
+            width: 100%;
+            max-width: 1100px; /* MODIFIED: Increased for two-column layout */
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- Revelation Card --- */
+        .revelation-card {
+            display: grid; /* MODIFIED: Use grid for two columns */
+            grid-template-columns: 1fr 1fr; /* Two equal columns */
+            align-items: start; /* MODIFIED: Vertically align columns to the top */
+            gap: 3rem; /* Spacious gap between columns */
+            border: 1px solid transparent; /* For visualization */
+        }
+
+        .revelation-card .hook {
+            font-family: 'Lora', serif; /* CHANGED: Use serif font */
+            font-size: var(--hook-font-size); /* 36px - Increased size */
+            font-weight: 400; /* Regular weight for elegance */
+            line-height: 1.3;
+            color: #EAEAEA;
+            text-align: left;
+            margin-bottom: var(--hook-to-bridge-spacing);
+        }
+
+        .revelation-card .bridge {
+            font-family: 'Lora', serif; /* CHANGED: Use serif font */
+            font-size: var(--bridge-font-size); /* 20px - Slightly larger body */
+            line-height: 1.6;
+            color: #BDBDBD;
+            text-align: left;
+            margin-bottom: 0; /* MODIFIED: No longer stacks on card */
+        }
+
+        .revelation-card .bridge i {
+            font-style: italic;
+            color: #CCCCCC; /* Slightly brighter for the quote */
+        }
+
+        /* --- Every Article Component (Refactored for 2-column layout) --- */
+        .every-article-card {
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            gap: var(--article-card-gap);
+            border: 1px solid #333333;
+            padding: var(--article-card-padding);
+            border-radius: 12px;
+            transition: background-color 0.2s ease-in-out;
+            /* max-width removed and margin adjusted for left alignment */
+            margin: 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .every-article-card:hover {
+            background-color: #1A1A1A;
+            cursor: pointer;
+        }
+
+        .every-article-card .article-image {
+            width: 100%;
+            height: 220px;
+            flex-shrink: 0;
+            background-color: #1a1a1a;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .every-article-card .article-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .every-article-card .article-text-content {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .every-article-card .article-title {
+            font-family: 'Lora', serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #FFFFFF;
+            line-height: 1.2;
+        }
+
+        .every-article-card .article-meta {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #808080;
+        }
+
+        .every-article-card .article-link {
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            color: #BDBDBD;
+            margin-top: 0.5rem;
+        }
+
+        .feed-separator {
+            border: 0;
+            height: 1px;
+            background-color: #333333;
+            margin: var(--separator-spacing) 0;
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            margin-left: -50vw;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Header from every_clone.html -->
+    <header class="w-full bg-black border-b border-[#505050]">
+        <nav class="relative flex justify-between items-center px-4 py-6 w-full">
+            <!-- Left Side: Menu + Search -->
+            <div class="flex items-center gap-6">
+                <button id="open-drawer" class="p-2">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3 12H21M3 6H21M3 18H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <a href="" class="p-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M7.657 6.247c.11-.33.576-.33.686 0l.645 1.937a2.89 2.89 0 0 0 1.829 1.828l1.936.645c.33.11.33.576 0 .686l-1.937.645a2.89 2.89 0 0 0-1.828 1.829l-.645 1.936a.361.361 0 0 1-.686 0l-.645-1.937a2.89 2.89 0 0 0-1.828-1.828l-1.937-.645a.361.361 0 0 1 0-.686l1.937-.645a2.89 2.89 0 0 0 1.828-1.828l.645-1.937zM3.794 1.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387A1.734 1.734 0 0 0 4.593 5.9l-.387 1.162a.217.217 0 0 1-.412 0L3.407 5.9A1.734 1.734 0 0 0 2.31 4.807l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387A1.734 1.734 0 0 0 3.407 2.31l.387-1.162zM10.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L10.863.1z"/>
+                    </svg>
+                </a>
+            </div>
+
+            <!-- Center: Logo (Dead Center of Screen) -->
+            <div class="absolute left-1/2 transform -translate-x-1/2">
+                <a href="/">
+                    <img src="assets/logo.png" alt="Every Intelligence" class="h-12 w-auto">
+                </a>
+            </div>
+            
+            <!-- Spacer for flex layout -->
+            <div class="flex-1"></div>
+
+            <!-- Right Side: Sign in + Subscribe -->
+            <div class="flex items-center gap-4">
+                <a href="/login" class="text-[#BDBDBD]">Sign in</a>
+                <a href="/subscribe" class="px-4 py-2 bg-[#c0f0fb] text-black font-bold rounded-md">Subscribe</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Mobile Drawer from every_clone.html -->
+    <div id="drawer" class="fixed transition-all z-[100001] top-0 left-[-100%] bottom-0 flex flex-col p-4 bg-zinc-900 max-w-[277px]">
+        <button id="close-drawer" class="self-start mb-4">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+        <div class="space-y-4 text-white">
+            <a href="/" class="block">Home</a>
+            <a href="/about" class="block">About</a>
+            <a href="/contact" class="block">Contact</a>
+        </div>
+    </div>
+
+    <!-- Drawer Overlay from every_clone.html -->
+    <div id="drawer-overlay" class="fixed inset-0 bg-black/50 z-[100000] hidden"></div>
+
+
+    <main class="revelation-feed">
+
+        <!-- START: A Single Revelation Card -->
+        <div class="revelation-card">
+
+            <!-- MOVED: The Destination (The Article Itself) is now the left column -->
+            <a href="#" class="every-article-card" style="align-self: stretch;">
+                <div class="article-image">
+                    <img src="CoverImage.png" alt="Abstract illustration of hands holding an open book.">
+                </div>
+                <div class="article-text-content">
+                    <h3 class="article-title">How to Keep Your Writing Weird in the Age of AI</h3>
+                    <p class="article-meta">Katie Parrott / Working Overtime</p>
+                    <p class="article-link">→ Read the Essay</p>
+                </div>
+            </a>
+            
+            <!-- This div now acts as the right column for the text -->
+            <div>
+                <!-- 1. The Hook (The AI's Observation) -->
+                <h2 class="hook">
+                    You're navigating the tension between creative freedom and the pressure to produce.
+                </h2>
+
+                <!-- 2. The Bridge (The Colleague's Insight) -->
+                <p class="bridge">
+                    That's a challenge Katie Parrott explores directly. She found that the very tools meant to increase output can sometimes sterilize the creative process. In her essay, she wrestled with this, asking herself: <i>"How do you keep your work unique and imbued with personality when AI can generate a thousand similar things in a second?"</i> It's a crucial question for anyone working on the frontier.
+                </p>
+            </div>
+
+        </div>
+        <!-- END: A Single Revelation Card -->
+
+        <!-- The full-width separator -->
+        <hr class="feed-separator" />
+
+        <!-- START: A Second Revelation Card -->
+        <div class="revelation-card">
+
+             <!-- MOVED: The Destination (The Article Itself) is now the left column -->
+             <a href="#" class="every-article-card" style="align-self: stretch;">
+                <div class="article-image">
+                    <img src="CoverImage.png" alt="Abstract illustration of hands holding an open book.">
+                </div>
+                <div class="article-text-content">
+                    <h3 class="article-title">How to Keep Your Writing Weird in the Age of AI</h3>
+                    <p class="article-meta">Katie Parrott / Working Overtime</p>
+                    <p class="article-link">→ Read the Essay</p>
+                </div>
+            </a>
+            
+            <!-- This div now acts as the right column for the text -->
+            <div>
+                <!-- 1. The Hook (The AI's Observation) -->
+                <h2 class="hook">
+                    You're navigating the tension between creative freedom and the pressure to produce.
+                </h2>
+
+                <!-- 2. The Bridge (The Colleague's Insight) -->
+                <p class="bridge">
+                    That's a challenge Katie Parrott explores directly. She found that the very tools meant to increase output can sometimes sterilize the creative process. In her essay, she wrestled with this, asking herself: <i>"How do you keep your work unique and imbued with personality when AI can generate a thousand similar things in a second?"</i> It's a crucial question for anyone working on the frontier.
+                </p>
+            </div>
+            
+        </div>
+        <!-- END: A Second Revelation Card -->
+
+    </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Mobile drawer script ---
+            const openDrawer = document.getElementById("open-drawer");
+            const closeDrawer = document.getElementById("close-drawer");
+            const drawer = document.getElementById("drawer");
+            const drawerOverlay = document.getElementById("drawer-overlay");
+
+            openDrawer.addEventListener("click", () => {
+                drawer.style.left = "0%";
+                drawerOverlay.classList.remove("hidden");
+            });
+
+            const closeDrawerHandler = () => {
+                drawer.style.left = "-100%";
+                drawerOverlay.classList.add("hidden");
+            };
+
+            closeDrawer.addEventListener("click", closeDrawerHandler);
+            drawerOverlay.addEventListener("click", closeDrawerHandler);
+
+            // --- LOAD REAL RESULTS ---
+            const resultsData = sessionStorage.getItem('processingResults');
+            if (resultsData) {
+                try {
+                    const results = JSON.parse(resultsData);
+                    displayResults(results);
+                } catch (error) {
+                    console.error('Error parsing results:', error);
+                    showError('Error loading results. Please try again.');
+                }
+            } else {
+                showError('No results found. Please go back and submit a conversation.');
+            }
+        });
+
+        function displayResults(results) {
+            const mainElement = document.querySelector('main.revelation-feed');
+            
+            if (results.status === 'success' && results.insights && results.insights.length > 0) {
+                // Clear existing content
+                mainElement.innerHTML = '';
+                
+                // Create revelation cards for each insight
+                results.insights.forEach((insight, index) => {
+                    const cardHTML = `
+                        <div class="revelation-card">
+                            <!-- Article Card (Left Column) -->
+                            <a href="${insight.metadata.link}" target="_blank" class="every-article-card" style="align-self: stretch;">
+                                <div class="article-image">
+                                    <img src="${insight.metadata.image_url || 'CoverImage.png'}" 
+                                         alt="${insight.metadata.title}"
+                                         onerror="this.src='CoverImage.png'">
+                                </div>
+                                <div class="article-text-content">
+                                    <h3 class="article-title">${insight.metadata.title}</h3>
+                                    <p class="article-meta">${insight.metadata.author}</p>
+                                    <p class="article-link">→ Read the Article</p>
+                                </div>
+                            </a>
+                            
+                            <!-- Insight Text (Right Column) -->
+                            <div>
+                                <h2 class="hook">${insight.hook}</h2>
+                                <p class="bridge">${insight.bridge}</p>
+                            </div>
+                        </div>
+                    `;
+                    
+                    mainElement.innerHTML += cardHTML;
+                    
+                    // Add separator between cards (except for the last one)
+                    if (index < results.insights.length - 1) {
+                        mainElement.innerHTML += '<hr class="feed-separator" />';
+                    }
+                });
+                
+                // Add processing time info at the bottom
+                const processingInfo = `
+                    <div style="text-align: center; margin-top: 4rem; padding: 2rem; color: #666;">
+                        <p>✨ Generated ${results.insights.length} insights in ${results.processing_time.toFixed(2)}s</p>
+                        <p><a href="/" style="color: #c0f0fb;">← Analyze another conversation</a></p>
+                    </div>
+                `;
+                mainElement.innerHTML += processingInfo;
+                
+            } else {
+                showError(results.error || 'No insights could be generated from your conversation.');
+            }
+        }
+
+        function showError(message) {
+            const mainElement = document.querySelector('main.revelation-feed');
+            mainElement.innerHTML = `
+                <div class="revelation-card">
+                    <div class="every-article-card" style="align-self: stretch;">
+                        <div class="article-image" style="background-color: #2a2a2a; display: flex; align-items: center; justify-content: center;">
+                            <span style="color: #888; font-size: 1.2rem;">⚠️</span>
+                        </div>
+                        <div class="article-text-content">
+                            <h3 class="article-title">Processing Error</h3>
+                            <p class="article-meta">Something went wrong</p>
+                            <a href="/" class="article-link">← Try Again</a>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h2 class="hook">Oops, something went wrong.</h2>
+                        <p class="bridge">${message}</p>
+                        <p class="bridge"><a href="/" style="color: #c0f0fb;">← Go back and try again</a></p>
+                    </div>
+                </div>
+            `;
+        }
+    </script>
+
+</body>
+</html>
