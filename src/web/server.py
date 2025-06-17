@@ -21,14 +21,14 @@ from pydantic import BaseModel, HttpUrl
 import asyncio
 import uuid
 import uvicorn
-import sys
-import importlib.util
 import json
 
 # Import from the new structure
 import sys
 import os
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
+# Add the project root to the path so we can import from src/
+project_root = os.path.join(os.path.dirname(__file__), '..', '..')
+sys.path.insert(0, project_root)
 from src.core.resonance_matcher import KISSResonanceMatcher
 
 # Global dictionary to store progress updates
@@ -92,19 +92,25 @@ class ProcessingResponse(BaseModel):
 # =============================================================================
 
 # Serve static files (HTML, CSS, JS, images) from the frontend directory
-# Mount static files to serve frontend assets
-app.mount("/static", StaticFiles(directory="frontend", html=True), name="static")
+# Mount static files to serve frontend assets - use absolute path
+frontend_path = os.path.join(project_root, "frontend")
+app.mount("/static", StaticFiles(directory=frontend_path, html=True), name="static")
 
-# Also serve individual static assets directly from root
-@app.get("/logo.png")
+# Serve assets from the assets folder
+@app.get("/assets/logo.png")
 async def serve_logo():
     """Serve the Every logo directly"""
-    return FileResponse("frontend/assets/logo.png")
+    return FileResponse(os.path.join(project_root, "frontend", "assets", "logo.png"))
 
-@app.get("/cover.png") 
+@app.get("/assets/cover.png") 
 async def serve_cover():
     """Serve the cover image for articles"""
-    return FileResponse("frontend/assets/cover.png")
+    return FileResponse(os.path.join(project_root, "frontend", "assets", "cover.png"))
+
+@app.get("/assets/link-icon.svg")
+async def serve_link_icon():
+    """Serve the link icon"""
+    return FileResponse(os.path.join(project_root, "frontend", "assets", "link-icon.svg"))
 
 @app.get("/favicon.ico")
 async def serve_favicon():
@@ -123,7 +129,7 @@ async def serve_favicon():
 async def home():
     """Serve the main landing page"""
     try:
-        with open("frontend/index.html", "r") as f:
+        with open(os.path.join(project_root, "frontend", "index.html"), "r") as f:
             return HTMLResponse(content=f.read())
     except FileNotFoundError:
         raise HTTPException(status_code=404, detail="Landing page not found")
@@ -132,7 +138,7 @@ async def home():
 async def results():
     """Serve the results page"""
     try:
-        with open("frontend/results.html", "r") as f:
+        with open(os.path.join(project_root, "frontend", "results.html"), "r") as f:
             return HTMLResponse(content=f.read())
     except FileNotFoundError:
         raise HTTPException(status_code=404, detail="Results page not found")
@@ -220,10 +226,25 @@ async def process_conversation(request: ConversationRequest):
         # Process the conversation using our existing backend with progress tracking
         raw_insights = await matcher.process(url=request.chatgpt_url, progress_callback=progress_callback)
         
+        # Check if the conversation extraction failed (simple check)
+        if raw_insights.startswith("Unable to extract"):
+            # Clean up progress tracking on extraction error
+            if session_id in progress_updates:
+                del progress_updates[session_id]
+            
+            processing_time = time.perf_counter() - start_time
+            return ProcessingResponse(
+                status="error",
+                processing_time=processing_time,
+                insights=[],
+                error=raw_insights,
+                session_id=session_id
+            )
+        
         # Calculate processing time
         processing_time = time.perf_counter() - start_time
         
-        # Parse the JSON response from kissedApp3
+        # Parse the JSON response from the resonance matcher
         try:
             # The response should be a JSON array of insight objects
             insights_data = json.loads(raw_insights)
@@ -260,15 +281,31 @@ async def process_conversation(request: ConversationRequest):
             
         except json.JSONDecodeError as e:
             print(f"⚠️  JSON parsing failed: {e}")
-            # Fallback: return raw insights as a single card
+            
+            # Check if the raw insights look like an error message
+            if raw_insights.startswith("Error:") or "error" in raw_insights.lower()[:100]:
+                # Don't create a fallback insight for error messages
+                # Clean up progress tracking
+                if session_id in progress_updates:
+                    del progress_updates[session_id]
+                
+                return ProcessingResponse(
+                    status="error",
+                    processing_time=processing_time,
+                    insights=[],
+                    error="Failed to process the conversation. Please check the URL and try again.",
+                    session_id=session_id
+                )
+            
+            # Only create fallback insight if it's actually insight content
             fallback_insight = InsightCard(
                 hook="Processing completed",
-                bridge=raw_insights[:200] + "..." if len(raw_insights) > 200 else raw_insights,
+                bridge="The conversation was processed but the results couldn't be parsed into structured insights. Please try again or contact support if this persists.",
                 metadata=ArticleMetadata(
-                    title="Raw Processing Results",
+                    title="Processing Results",
                     author="Every Intelligence",
                     link="#",
-                    image_url="CoverImage.png"
+                    image_url="assets/cover.png"
                 )
             )
             
@@ -313,9 +350,8 @@ if __name__ == "__main__":
     print("🔍 Health Check: http://localhost:3000/health")
     
     uvicorn.run(
-        "web_server:app",
+        app,
         host="0.0.0.0",
         port=3000,
-        reload=True,  # Auto-reload on code changes during development
         log_level="info"
     ) 

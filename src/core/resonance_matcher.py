@@ -26,7 +26,10 @@ class KISSResonanceMatcher:
     def _load_scraped_articles(self):
         """Load the original scraped articles to get image URLs"""
         try:
-            with open('data/articles.json', 'r', encoding='utf-8') as f:
+            # Get the project root path (two levels up from this file)
+            project_root = os.path.join(os.path.dirname(__file__), '..', '..')
+            data_path = os.path.join(project_root, 'data', 'articles.json')
+            with open(data_path, 'r', encoding='utf-8') as f:
                 data = json.load(f)
             articles = data.get('articles', [])
             

@@ -1,0 +1,149 @@
+{
+  "single_approach": {
+    "approach": "Themes & Structured Analysis",
+    "processing_time": 37.790220975875854,
+    "analysis_data": {
+      "article_themes_as_statements": [
+        "Writers often sabotage their creative flow by editing too soon, a symptom of perfectionism and cognitive switching costs.",
+        "Separating creative drafting from critical editing is crucial for producing high-quality work efficiently.",
+        "Mental models like System 1 (intuitive) vs. System 2 (analytical) thinking can illuminate why creative and editing modes clash.",
+        "AI tools offer promise for offloading editing, but may alter skill development and workflow dynamics."
+      ],
+      "every_style_insights": [
+        "Perfectionism is less a personality flaw and more a byproduct of modern knowledge work's incentives and feedback loops.",
+        "The hidden costs of cognitive switching are underestimated in writing workflows.",
+        "Our relationship with AI tools is not just about productivity, but about shaping what kind of writers we become."
+      ],
+      "conceptual_frameworks_described": [
+        "System 1 vs. System 2 thinking (Kahneman): fast, intuitive vs. slow, analytical modes\u2014applied to writing.",
+        "The Double Diamond model: divergent (creative) vs. convergent (editing) phases.",
+        "Cognitive switching costs: the mental friction of toggling between creative and critical tasks.",
+        "The 'Shitty First Drafts' principle (Anne Lamott): granting permission to produce imperfect initial work."
+      ],
+      "user_challenge_narrative": "You want to write fluidly and creatively, but your inner editor keeps hijacking the process, pulling you out of flow and into perfectionist tinkering. You're seeking practical frameworks and tools to help you disentangle these modes, and wondering if AI can play a productive role without undermining your growth as a writer.",
+      "strategic_tension_description": "The tension between creative flow and critical editing is exacerbated by perfectionism and by the ease of digital self-editing. Introducing AI tools could either resolve this tension by externalizing editing, or deepen it by creating new dependencies and skill gaps.",
+      "future_implications_speculation": "If AI tools become ubiquitous in editing, writers may shift toward more experimental, less self-censored drafting. However, over-reliance on AI may deskill human editors, creating a bifurcation between 'AI-native' and 'craft-focused' writers. Workflow philosophies may evolve to explicitly separate creative and editing phases, perhaps even gamifying or ritualizing the transition.",
+      "underlying_assumptions_questioned": [
+        "Is 'editing as you go' always bad, or are there contexts where it can be productive?",
+        "Does separating creative and editing phases actually improve quality, or just efficiency?",
+        "Will AI tools inevitably deskill writers, or can they augment and accelerate skill development?"
+      ],
+      "contrarian_perspectives_explored": [
+        "Editing during writing can sometimes be a form of productive iteration, not just perfectionism.",
+        "AI editing may enhance, not erode, a writer's unique voice if used intentionally."
+      ],
+      "systems_thinking_connections": [
+        "The writing process as a system with feedback loops: early editing interrupts positive feedback from creative flow.",
+        "AI tools as new system nodes that can rebalance or destabilize traditional writing workflows."
+      ],
+      "decision_frameworks_implied": [
+        "Deliberate phase separation: timeboxing creative vs. editing sessions.",
+        "Choosing AI tools based on augmenting, not replacing, core writing skills."
+      ],
+      "workflow_philosophies_embedded": [
+        "Embrace 'draft, then edit' as a ritual, not just a rule.",
+        "Use environmental and digital cues to enforce mode switching (e.g., different apps or settings for drafting vs. editing)."
+      ],
+      "tool_evaluation_criteria": [
+        "Does the tool reinforce creative flow or trigger critical thinking prematurely?",
+        "Does it provide feedback that is constructive rather than prescriptive?",
+        "Can the tool be easily toggled on/off to respect phase separation?"
+      ],
+      "cultural_shifts_reflected": [
+        "A growing acceptance of imperfection and iteration in creative work.",
+        "The normalization of AI as a collaborator, not just a tool, in knowledge work."
+      ],
+      "technology_adoption_patterns": [
+        "Early adopters integrate AI editing into their workflow, but best practices are still emerging.",
+        "Resistance from traditionalists who fear loss of craft and skill."
+      ],
+      "professional_identity_themes": [
+        "The evolving definition of 'writer' in an AI-augmented world.",
+        "Tension between being a craftsman vs. being a content producer."
+      ],
+      "primary_article_concepts": [
+        "Phase separation in creative work",
+        "System 1 vs. System 2 in writing",
+        "AI as editing collaborator",
+        "Perfectionism and cognitive switching costs"
+      ],
+      "deep_dive_topics": [
+        "The neuroscience of creative vs. analytical thinking in writing",
+        "Case studies: Writers who separate drafting and editing phases",
+        "How AI tools influence writing habits and skill development"
+      ],
+      "practical_guide_topics": [
+        "How to ritualize phase separation in your writing workflow",
+        "Selecting and configuring AI tools for editing without disrupting flow",
+        "Self-experiments to test different drafting/editing separation models"
+      ],
+      "meta_observations_about_ai_interaction": "This exchange itself exemplifies the new genre of 'thinking in public' with AI, using the tool as a mirror for self-inquiry and workflow design.",
+      "broader_implications_for_knowledge_work": "As AI tools increasingly mediate creative and analytical phases, knowledge workers must become intentional about when and how to leverage automation versus cultivating core skills. The future of knowledge work may be defined less by what we automate, and more by how we architect our own cognitive workflows."
+    },
+    "search_queries": [
+      "Writers often sabotage their creative flow by editing too soon, a symptom of perfectionism and cognitive switching costs.",
+      "Separating creative drafting from critical editing is crucial for producing high-quality work efficiently.",
+      "Mental models like System 1 (intuitive) vs. System 2 (analytical) thinking can illuminate why creative and editing modes clash.",
+      "Perfectionism is less a personality flaw and more a byproduct of modern knowledge work's incentives and feedback loops.",
+      "The hidden costs of cognitive switching are underestimated in writing workflows.",
+      "You want to write fluidly and creatively, but your inner editor keeps hijacking the process, pulling you out of flow and into perfectionist tinkering. You're seeking practical frameworks and tools to help you disentangle these modes, and wondering if AI can play a productive role without undermining your growth as a writer."
+    ],
+    "raw_results_count": 18,
+    "unique_articles": 15,
+    "top_articles": [
+      {
+        "title": "Writing Essays With AI: A Guide",
+        "author": "Dan Shipper",
+        "column": "chain-of-thought",
+        "score": 0.48819056153297424,
+        "chunk_type": "content",
+        "url": "https://every.to/chain-of-thought/writing-essays-with-ai-a-guide",
+        "preview": "If you type a few bland prompts, youll get bland completions. If you push it in a creative and interesting direction, youll get creative and interesting results. It works best when its used by an experienced and talented writer as another tool in their tool belt. I want to spend the rest of this pie..."
+      },
+      {
+        "title": "How to Make AI Write Like Your Favorite Author",
+        "author": "Dan Shipper",
+        "column": "chain-of-thought",
+        "score": 0.47779539227485657,
+        "chunk_type": "content",
+        "url": "https://every.to/chain-of-thought/how-to-make-ai-write-like-your-favorite-author",
+        "preview": "But if youre not getting the results you want, its time to move on to the next step: describing the style you want. Telling the AI to write like Annie Dillard or to write like Tolkien can give you interesting results, but its also vague. What is it about Dillard or Tolkien that youre trying to captu..."
+      },
+      {
+        "title": "Why I Avoided AIAnd How I Finally Embraced It",
+        "author": "Rhea Purohit",
+        "column": "learning-curve",
+        "score": 0.4591743052005768,
+        "chunk_type": "content",
+        "url": "https://every.to/learning-curve/why-i-avoided-ai-and-how-i-finally-embraced-it",
+        "preview": "Once I realized that this paradox isnt rooted in inauthenticity or incompetence, it freed me to find ways to change. And soon, I started running my own experiments with AI, like: Being able to make sense of why I felt friction in integrating AI into my workflow is helping me get better at deriving v..."
+      },
+      {
+        "title": "AI Phobia Is Just Fear That Easier Equals Cheating",
+        "author": "Katie Parrott",
+        "column": "working-overtime",
+        "score": 0.37507951259613037,
+        "chunk_type": "content",
+        "url": "https://every.to/working-overtime/ai-phobia-is-really-just-fear-that-easier-equals-cheating",
+        "preview": "Workers engage in elaborate displays of \"being at work\": staying visible on Slack, responding to emails at all hours, and maintaining a digital presence that signals industriousness. The tools have evolvedfrom software that monitors keyboard activity to AI that analyzes facial expressions in video c..."
+      },
+      {
+        "title": "The Once and Future History of Knowledge Work",
+        "author": "Katie Parrott",
+        "column": "working-overtime",
+        "score": 0.33853042125701904,
+        "chunk_type": "content",
+        "url": "https://every.to/working-overtime/the-once-and-future-history-of-knowledge-work",
+        "preview": "This corporate lingo carries more than a tinge of classism, social hierarchy, and condescensionas if real work happens only in front of a computer screen, pushing pixels around and complaining about the hardship of having ones camera on during Zoom calls. That said, as a marketer, I very much fit Dr..."
+      }
+    ],
+    "strengths": [
+      "Structured, interpretable output",
+      "Covers multiple conceptual dimensions",
+      "Good for understanding conversation themes"
+    ],
+    "query_diversity": 6
+  },
+  "total_evaluation_time": 37.80508208274841,
+  "conversation_preview": "\n        I've been struggling with my writing process lately. I spend way too much time editing as I go, \n        which kills my flow state. I know I should just write first and edit later, but I can't help myself.\n        It's like I'm fighting my own perfectionist tendencies. I'm wondering if there are any frameworks \n        or mental models that could help me separate the creative phase from the editing phase more cleanly.\n        \n        Maybe something related to how different types of th..."
+}

@@ -79,7 +79,11 @@ def extract_chatgpt_conversation(share_url: str) -> str:
             return format_conversation(messages)
             
         except Exception as e:
-            return f"Error: {str(e)}"
+            # Temporarily log the actual error for debugging
+            print(f"🔍 ACTUAL PLAYWRIGHT ERROR: {str(e)}")
+            print(f"🔍 Error type: {type(e)}")
+            # Simple, user-friendly error message instead of exposing technical details
+            return "Unable to extract conversation. ChatGPT may have changed their sharing system or the conversation is no longer accessible. Please verify the URL is a valid, public ChatGPT share link."
         finally:
             browser.close()
 
